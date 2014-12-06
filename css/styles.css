@@ -74,16 +74,16 @@ li {
 }
 
 a {
-	color: #e96656;
+	color: #FFFFFF;
 	-webkit-transition: all 700ms;
-	        transition: all 700ms;
+	transition: all 700ms;
 }
 
 a,a:hover {
 	text-decoration: none;
 }
 a:hover {
-	color: #cb4332;
+	color: #FF6600;
 }
 p {
     margin: 0;
@@ -1468,7 +1468,7 @@ width: -webkit-calc(100% / 2);
 -----------------------------------------*/
 .testimonial {
 	background: #dbbf56;
-	padding-bottom: 90px;
+	padding-bottom: 180px;
 }
 #client-feedbacks .feedback-box {
 	background: #FFFFFF;
