@@ -18,7 +18,11 @@ src: url('fonts/712-icon-fonts.svg#712-icon-fonts') format('svg');
 
 }
 }
-
+.roundimg {
+            display:inherit;
+			border-radius: 50%;
+            
+}
 [data-icon]:before {
   font-family: "712-icon-fonts" !important;
   content: attr(data-icon);
@@ -323,7 +327,7 @@ src: url('fonts/712-icon-fonts.svg#712-icon-fonts') format('svg');
 }
 .icon-settings-streamline-1:before {
   content: "~";
-}
+}	
 .icon-settings-streamline-2:before {
   content: "\";
 }
