@@ -1467,7 +1467,7 @@ width: -webkit-calc(100% / 2);
  **   SECTION:  TESTIMONIAL            -----
 -----------------------------------------*/
 .testimonial {
-	background: #dbbf56;
+	background:#dbbf56;
 	padding-bottom: 180px;
 }
 #client-feedbacks .feedback-box {
