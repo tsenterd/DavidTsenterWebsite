@@ -746,7 +746,7 @@ input:focus {
 -----------------------------------------*/
 
 .separator-one {
-	background: rgba(0,80,150, 0.6);
+	background: rgba(63,109,140, 0.7);
 	padding: 100px 0 100px 0;
 }
 .separator-one .green-btn {
@@ -1167,6 +1167,7 @@ width: -webkit-calc(100% / 2);
 }
 .features .feature p {
 	font-size: 14px;
+	color: #000;
 }
 
 /*---------------------------------------
@@ -1467,7 +1468,7 @@ width: -webkit-calc(100% / 2);
  **   SECTION:  TESTIMONIAL            -----
 -----------------------------------------*/
 .testimonial {
-	background:#dbbf56;
+	background: #272727;
 	padding-bottom: 180px;
 }
 #client-feedbacks .feedback-box {
