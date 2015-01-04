@@ -8,7 +8,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 global $error;
 	$mail = new PHPMailer();  // create a new object
 	$mail->IsSMTP(); // enable SMTP
-	$mail->SMTPDebug = 0;  // debugging: 1 = errors and messages, 2 = messages only
+	$mail->SMTPDebug = 2;  // debugging: 1 = errors and messages, 2 = messages only
 	
 	//READ IN DATA
 	$name = ($_POST["name"]);
@@ -27,7 +27,6 @@ echo '<br />';
    echo '<button onclick="history.go(-1);">Back </button>';
   return false;
 }
-	
 	$mail->SMTPAuth = true;  // authentication enabled
 	$mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
 	$mail->Host = 'smtp.gmail.com';
