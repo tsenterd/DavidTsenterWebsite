@@ -30,7 +30,7 @@ echo '<br />';
 	$mail->SMTPAuth = true;  // authentication enabled
 	$mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
 	$mail->Host = 'smtp.gmail.com';
-	$mail->Port = 485; 
+	$mail->Port = 465; 
 	$mail->Username = GUSER;  
 	$mail->Password = GPWD;           
 	$mail->SetFrom($email, $name);
