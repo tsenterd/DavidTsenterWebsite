@@ -29,9 +29,9 @@ echo '<br />';
 }
 	
 	$mail->SMTPAuth = true;  // authentication enabled
-	$mail->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
+	$mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
 	$mail->Host = 'smtp.gmail.com';
-	$mail->Port = 587; 
+	$mail->Port = 485; 
 	$mail->Username = GUSER;  
 	$mail->Password = GPWD;           
 	$mail->SetFrom($email, $name);
