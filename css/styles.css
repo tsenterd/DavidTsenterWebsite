@@ -74,7 +74,7 @@ li {
 }
 
 a {
-	color: #000000;
+	color: #FFFFFF;
 	-webkit-transition: all 700ms;
 	transition: all 700ms;
 }
@@ -511,7 +511,7 @@ input:focus {
 }
 .section-header {
 	text-align: center;
-	padding-bottom: 75px;
+	padding-bottom: 50px;
 }
 .section-header h2 {
 	padding-bottom: 10px;
@@ -1576,7 +1576,7 @@ width: -webkit-calc(100% / 2);
 /* ----------------------------------------*/
 
 footer {
-	background: #272727;
+	background-color: #171717;
 }
 .company-details {
 	color: #939393;
@@ -1590,7 +1590,7 @@ footer {
 .copyright {
 	padding-top: 60px;
 	padding-bottom: 68px;
-	background: #171717;
+	background-color: #171717;
 }
 .social li {
 	display: inline-block;
