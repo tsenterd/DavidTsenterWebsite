@@ -74,7 +74,7 @@ li {
 }
 
 a {
-	color: #FFFFFF;
+	color: #000000;
 	-webkit-transition: all 700ms;
 	transition: all 700ms;
 }
@@ -233,7 +233,7 @@ h4 {
 }
 h5 {
 	font-size: 24px;
-	color: #FFF;
+	color: #000;
 }
 h6 {
 	font-size: 18px;
@@ -1559,7 +1559,7 @@ width: -webkit-calc(100% / 2);
 -----------------------------------------*/
 
 .contact-us {
-	background: rgba(0, 0, 0, 0.5);
+	background: rgb(255, 255, 255);
 	padding-bottom: 95px;
 }
 .contact-us .input-box,textarea {
