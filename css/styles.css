@@ -556,10 +556,11 @@ input:focus {
 -----------------------------------------*/
 
 .header {
-	background: rgba(0, 0, 0, 0.5);
 	min-height: 775px;
 	position: relative;
 	overflow: hidden;
+	background-image: url(../resources/img1.png);
+	background-color: rgba(0,0,0,0.5);
 }
 
 /*----  SECTION:  HOME > TOP BAR   ----*/
