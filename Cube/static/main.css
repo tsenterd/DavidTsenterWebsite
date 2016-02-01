@@ -1,0 +1,50 @@
+html, body, .fill {
+    height: 100%;
+}
+
+.glube {
+	width: 400px;
+    height: 400px;
+    padding-bottom:48px;
+}
+canvas {
+    height: 100%;
+    width: 100%;
+	outline: 1px solid silver;
+}
+
+.control {
+    color: #428bca;
+    font-weight: bold;
+}
+
+.controls {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+#controls {display:none}
+#controls td {
+	padding:.3em;
+	text-align:center;
+}
+#controls td .btn:hover {
+	background-color: #428bca;
+	color: white;
+}
+
+#moveList {
+    font: 1em monospace;
+}
+
+.alg {
+    display:inline;
+    width:500px;
+}
+.alg input {
+    width: 50%;
+    display:inline;
+}
+.scramble, .alg label {
+    display:none;
+}

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Rubik's Cube Teacher</title>
+        <meta name="description" content="A WebGL animated Rubik's cube by Michiel van der Blonk">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="static/main.css">
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="js/jquery.easing.min.js"></script>
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/gl-matrix-min.js"></script>
+        <script type="text/javascript" src="js/models.js"></script>
+        <script type="text/javascript" src="js/rubiks.js"></script>
+        <script id="fragmentShader" type="x-shader/x-fragment">
+            varying highp vec4 position;
+            varying highp vec3 normal;
+
+            uniform bool lighting;
+            uniform highp vec3 eyePosition;
+            uniform highp vec4 ambient;
+            uniform highp vec4 diffuse;
+            uniform highp vec4 specular;
+            uniform highp float shininess;
+
+            const highp vec4 lightPosition = vec4(-1.,1.,-1., 1);
+            const highp vec4 lightColor = vec4(.2,.2,.2,1);
+
+            void main(void) {
+                if (lighting) {
+                    highp vec3 position = position.xyz / position.w;
+                    highp vec3 eyeDirection = normalize(eyePosition - position);
+                    highp vec3 lightPosition = lightPosition.xyz / lightPosition.w;
+                    highp vec3 lightDirection = normalize(lightPosition - position);
+                    highp vec3 halfAngle = normalize(lightDirection + eyeDirection);
+                    highp vec4 diffuseTerm = diffuse * lightColor * max(dot(normal, lightDirection), 0.0);
+                    highp vec4 specularTerm = specular * lightColor * pow(max(dot(normal, halfAngle), 0.0), shininess);
+                    gl_FragColor = diffuseTerm + specularTerm + ambient;
+                } else {
+                    gl_FragColor = ambient;
+                }
+            }
+        </script>
+        <script id="vertexShader" type="x-shader/x-vertex">
+            attribute vec3 vertexPosition;
+            attribute vec3 vertexNormal;
+
+            uniform mat4 modelViewMatrix;
+            uniform mat4 projectionMatrix;
+            uniform mat3 normalMatrix;
+
+            varying vec4 position;
+            varying vec3 normal;
+
+            void main(void) {
+                position = modelViewMatrix * vec4(vertexPosition, 1.0);
+                gl_Position = projectionMatrix * position;
+                normal = normalize(normalMatrix * vertexNormal);
+            }
+       </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row-fluid" style="position:relative;left:33%;">
+                <h3>Rubik's Cube Solver and Tutor</h3>
+                <h4>JS and WebGL dynamic cube</h4>
+                    <div>Click and drag with <span class="control">left mouse</span> to rotate a layer</div>
+                    <div>Click and drag with <span class="control">right mouse</span> to rotate the Rubik's Cube</div>
+                </div>
+            </div>
+
+            <div style="float:bottom;position:absolute;right:0;bottom:0;">
+              <p>Made by David Tsenter</p>
+            </div>
+
+            <div class="row">
+                <div class="glube" style="position:absolute;left:34%;top:18%">
+                    <canvas style="width:500px;height:500px;" data-alg="" data-type="solver" data-stickers=""></canvas>
+                    <div style="width = 500px;">
+                      <p>You can also tell the cube what move combinations to perform</p>
+                      <p>F- Front U - Up D - Down L - Left R - Right B - back ' - inverted</p>
+                        <button class="scramble-cube btn btn-info btn-sm">Scramble</button>
+                        <button class="reset-cube btn btn-info btn-sm">Solve</span></button>
+                        <div class="scramble">
+                            <label>Length</label>
+                            <input type="number" class="scramble-length" min="1" value="20" />
+                            <pre class="@brand-info moveList" style="margin-top:1em">moves will appear here</pre>
+                        </div>
+                        <div class="alg">
+
+                            <label id = "algolabel">Algorithm</label>
+                            <input id = "hey" class="algorithm form-control" placeholder="Algorithm" type="text" />
+                        </div>
+                        <button class="run-alg btn btn-info btn-sm"><span class="glyphicon glyphicon-play"></span></button>
+                        <div class="dropdown" style="position:absolute;top:568px;left:400px;">
+  <button class="btn btn btn-info btn-sm dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Algorithms
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+    <li role="presentation" id = "t" onclick="update();"><a role="menuitem" tabindex="-1" href="#">Cross</a></li>
+    <script>
+    function update()
+    {
+        document.getElementById("hey").value= "RUR'URUUR'";
+    }
+      document.getElementById("t").onClick = function(){update()};
+    </script>
+  </ul>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

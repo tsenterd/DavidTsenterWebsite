@@ -1,0 +1,417 @@
+<!DOCTYPE HTML>
+<!-- Simple Mental Math game designed to help improve computation speed. V1.0.0-->
+<html>
+    <head>
+
+<style>
+#mainbox
+{
+  display:none;
+position: absolute;
+left:45%;
+top: 30%;
+width: 15%;
+height:10%;
+border:2px solid #000000;
+border-radius: 25px;
+}
+#box1
+{
+  display:none;
+  position:absolute;
+    left: 45%;
+    top:10%;
+      width:15%;
+     height:10%;
+     background:red;
+     border: solid;
+     border-radius: 25px;
+}
+#box2
+{
+  display:none;
+  position:absolute;
+    left: 45%;
+    top:50%;
+      width:15%;
+     height:10%;
+     background:#3254ff;
+     border: solid;
+     border-radius: 25px;
+}
+#box3
+{
+  display:none;
+  position:absolute;
+    left: 25%;
+    top:30%;
+      width:15%;
+     height:10%;
+     background:green;
+     border: solid;
+     border-radius: 25px;
+}
+#box4
+{
+  display:none;
+  position:absolute;
+    left: 65%;
+    top:30%;
+      width:15%;
+     height:10%;
+     background:yellow;
+     border: solid;
+     border-radius: 25px;
+}
+.myButton {
+	-moz-box-shadow: 0px 0px 0px 2px #9fb4f2;
+	-webkit-box-shadow: 0px 0px 0px 2px #9fb4f2;
+	box-shadow: 0px 0px 0px 2px #9fb4f2;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #7892c2), color-stop(1, #476e9e));
+	background:-moz-linear-gradient(top, #7892c2 5%, #476e9e 100%);
+	background:-webkit-linear-gradient(top, #7892c2 5%, #476e9e 100%);
+	background:-o-linear-gradient(top, #7892c2 5%, #476e9e 100%);
+	background:-ms-linear-gradient(top, #7892c2 5%, #476e9e 100%);
+	background:linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#7892c2', endColorstr='#476e9e',GradientType=0);
+	background-color:#7892c2;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	border-radius:10px;
+	border:1px solid #4e6096;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:19px;
+	padding:12px 37px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #283966;
+}
+.myButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #476e9e), color-stop(1, #7892c2));
+	background:-moz-linear-gradient(top, #476e9e 5%, #7892c2 100%);
+	background:-webkit-linear-gradient(top, #476e9e 5%, #7892c2 100%);
+	background:-o-linear-gradient(top, #476e9e 5%, #7892c2 100%);
+	background:-ms-linear-gradient(top, #476e9e 5%, #7892c2 100%);
+	background:linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#476e9e', endColorstr='#7892c2',GradientType=0);
+	background-color:#476e9e;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    </head>
+    <body>
+      <div id = "ingame">
+      <div id = "interactive" style="display:none;">
+        <button id = "start" class = "myButton" type="button" onclick="start(true)" style="position:absolute;top:70%;left:43%;width:20%;">Start</button>
+        <div id = "timer">
+            <h2 id = "min" class = "minutes" style="position:absolute;top:14.25%;right:15%;">00</h2>
+            <h2  style="position:absolute;top:14%;right:14%;">:</h2>
+            <h2 id = "sec" class = "seconds" style="position:absolute;top:14.25%;right:12%;">00</h2>
+            <p style="position:absolute;bottom:0%;width:65%;"><b>Instructions</b>: Use the arrow keys (or drag the question into one of the boxes) to select your answer. When ready, press start!</p>
+      </div>
+
+        <h2 id = "score" style="position:absolute;top:5%;right:10%;"> Score: 0</h2>
+      </div>
+      <div id = "boxes">
+      <div id = "mainbox" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <div draggable="true" ondragstart="drag(event)" id = "drag1" width = "88" height="31" style="position:absolute;top:12%;left:35%;">
+          <h3 id = "question"></h3>
+        </div>
+      </div>
+        <div id = "box1" ondrop="drop(event,'t1')" ondragover="allowDrop(event)">
+            <h3 id = "t1" style="position:absolute;left:42%;top:12%;"></h3>
+        </div>
+        <div id = "box2" ondrop="drop(event,'t2')" ondragover="allowDrop(event)">
+            <h3 id = "t2" style="position:absolute;left:42%;top:12%;"></h3>
+        </div>
+        <div id = "box3" ondrop="drop(event,'t3')" ondragover="allowDrop(event)">
+            <h3 id = "t3" style="position:absolute;left:42%;top:12%;"></h3>
+        </div>
+        <div id = "box4" ondrop="drop(event,'t4')" ondragover="allowDrop(event)">
+            <h3 id = "t4" style="position:absolute;left:42%;top:12%;"></h3>
+        </div>
+      </div>
+      </div>
+
+          <h2 id = "top" style="position:absolute;left:45%;top:15%;">Mental Math Game</h2>
+          <div id = "buttons" style="position:absolute;top:29%;left:40%;">
+
+          <button type="button"  style="width:70%;height:150%;margin-bottom:10px;" class = "myButton" onclick="play('add')">Addition</button>
+          <button type="button"  style="width:70%;height:150%;margin-bottom:10px;" class = "myButton" onclick="play('subtract')">Subtraction</button>
+          <button type="button" style="width:70%;height:150%;" class = "myButton" onclick="play('multiply')">Multiplication</button>
+        </div>
+          <h1> </h1>
+          <p style="position:absolute;right:0%;bottom:0%;"> Made by David Tsenter </p>
+
+          <h2 id = "grats" style="position:absolute;left:39%;"></h2>
+
+
+        <script>
+        //COUNTDOWN:
+        function getTimeRemaining(endtime) {
+  var t = Date.parse(endtime) - Date.parse(new Date());
+  var seconds = Math.floor((t / 1000) % 60);
+  var minutes = Math.floor((t / 1000 / 60) % 60);
+  var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+  var days = Math.floor(t / (1000 * 60 * 60 * 24));
+  return {
+    'total': t,
+    'days': days,
+    'hours': hours,
+    'minutes': minutes,
+    'seconds': seconds
+  };
+}
+var t;
+var timeinterval ;
+function initializeClock(id, endtime) {
+  var clock = document.getElementById(id);
+  var daysSpan = clock.querySelector('.days');
+  var hoursSpan = clock.querySelector('.hours');
+  var minutesSpan = clock.querySelector('.minutes');
+  var secondsSpan = clock.querySelector('.seconds');
+
+  function updateClock() {
+    document.onkeydown = checkKey;
+
+    function checkKey(e) {
+
+      e = e || window.event;
+      if (e.keyCode == '38') {
+          drop(0,'t1')
+      }
+      else if (e.keyCode == '40') {
+        drop(0,'t2')
+      }
+      else if (e.keyCode == '37') {
+   drop(0,'t3')
+      }
+      else if (e.keyCode == '39') {
+   drop(0,'t4')
+      }
+      else if (e.keyCode == 27)
+      {
+        clearInterval(timeinterval);
+
+        mainMenu();
+      }
+}
+    t = getTimeRemaining(endtime);
+    minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+    secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+    if (t.total <= 0) {
+      clearInterval(timeinterval);
+      gameover();
+    }
+  }
+
+  updateClock();
+  timeinterval = setInterval(updateClock, 1000);
+}
+
+        var answer;
+        var topic;
+        var score = 0;
+        var o1,o2,o3,o4;
+        function play (topic)
+        {
+          document.getElementById("grats").innerHTML = "";
+          this.topic = topic;
+          //alert("Instructions: when you press start, a question will apear in the middle (white) box. Drag it to the box containing the correct result. You may also use your arrow keys to specify the correct box. Try to get the highest score you can in the time provided!");
+          document.getElementById("start").disabled = false;
+          var nodes = document.getElementById("buttons").getElementsByTagName('*');
+          for(var i = 0; i < nodes.length; i++)
+          {
+               nodes[i].style.display = 'none';
+          }
+          document.getElementById("top").innerHTML = "";
+          var nodes = document.getElementById("ingame").getElementsByTagName('*');
+          for(var i = 0; i < nodes.length; i++)
+          {
+               nodes[i].style.display = 'inline-block';
+          }
+        }
+        function mainMenu()
+        {
+          document.getElementById("score").innerHTML = "Score: 0";
+          score = 0;
+          var nodes = document.getElementById("ingame").getElementsByTagName('*');
+          for(var i = 0; i < nodes.length; i++)
+          {
+               nodes[i].style.display = 'none';
+          }
+          var nodes = document.getElementById("buttons").getElementsByTagName('*');
+          for(var i = 0; i < nodes.length; i++)
+          {
+               nodes[i].style.display = 'inline-block';
+          }
+          document.getElementById("sec").innerHTML = '00';
+          document.getElementById("min").innerHTML = '00';
+
+          document.getElementById("t1").innerHTML = "";
+          document.getElementById("t2").innerHTML = "";
+          document.getElementById("t3").innerHTML = "";
+          document.getElementById("t4").innerHTML = "";
+          document.getElementById("question").innerHTML = "";
+          document.getElementById("top").innerHTML = "Mental Math Game";
+          //document.getElementById("grats").innerHTML = "";
+        }
+        function gameover()
+        {
+          //alert("Congratulations! You got a score of: " + score);
+
+          document.getElementById("grats").innerHTML = "Congratulations, you got a score of: " + score;
+          mainMenu();
+        }
+        function start(first)
+        {
+          if (first == true)
+          {
+            var deadline = new Date(Date.parse(new Date()) + 1 * 1 * 1 * 60 * 1000);
+            initializeClock('timer', deadline);
+          }
+          document.getElementById("start").disabled = true;
+          var num1 = Math.floor((Math.random() * 100) + 1);
+          var num2 = Math.floor((Math.random() * 100) + 1);
+
+          if (topic == "add")
+          {
+          document.getElementById("question").innerHTML= num1 + " + " + num2;
+          answer = num1+num2;
+          var decide = Math.floor ((Math.random()*4)+1);
+          if (decide ==1){
+            o1 = answer;
+            o2 = num1+num2-Math.floor((Math.random() * 10) + 1);
+            o3 = num1*num2;
+            o4 = num1*2;
+          }
+          else if (decide ==2){
+            o1 = num1+num2-Math.floor((Math.random() * 10) + 1);
+            o2 = answer;
+            o3 = num1*num2;
+            o4 = num2*2;
+          }
+          else if (decide ==3){
+            o1 = num1+num2- Math.floor((Math.random() * 10) + 1);
+            o2 = num1+num2 - Math.floor((Math.random() * 10) + 1);
+            o3 = answer;
+            o4 = num1*2;
+          }
+          else if (decide ==4){
+            o1 = num2*2;
+            o2 = num1+num2 - Math.floor((Math.random() * 10) + 1);
+            o3 = num1+num2-Math.floor((Math.random() * 10) + 1);
+            o4 = answer;
+          }
+        }
+        else if (topic == "subtract")
+        {
+          document.getElementById("question").innerHTML= num1 + " - " + num2;
+          answer = num1-num2;
+          var decide = Math.floor ((Math.random()*4)+1);
+          if (decide ==1){
+            o1 = answer;
+            o2 = num1-num2-Math.floor((Math.random() * 10) + 1);
+            o3 = num1- 2*num1;
+            o4 = num1;
+          }
+          else if (decide ==2){
+            o1 = num1-num2-Math.floor((Math.random() * 10) + 1);
+            o2 = answer;
+            o3 = num1-num2 + Math.floor((Math.random() * 10) + 1);
+            o4 = num2;
+          }
+          else if (decide ==3){
+            o1 = num1-num2- Math.floor((Math.random() * 10) + 1);
+            o2 = num1-num2 + Math.floor((Math.random() * 10) + 1);
+            o3 = answer;
+            o4 = num1;
+          }
+          else if (decide ==4){
+            o1 = num2;
+            o2 = num1-num2 - Math.floor((Math.random() * 10) + 1);
+            o3 = num1-num2-Math.floor((Math.random() * 10) + 1);
+            o4 = answer;
+          }
+        }
+        else {
+          document.getElementById("question").innerHTML= num1 + " x " + num2;
+          var decide = Math.floor ((Math.random()*4)+1);
+          answer = num1*num2;
+          if (decide ==1){
+            o1 = answer;
+            o2 = num1*num2-Math.floor((Math.random() * 10) + 1);
+            o3 = num1*num1;
+            o4 = num1*2;
+          }
+          else if (decide ==2){
+            o1 = num1*num2-Math.floor((Math.random() * 10) + 1);
+            o2 = answer;
+            o3 = num1+num2;
+            o4 = num2*num2;
+          }
+          else if (decide ==3){
+            o1 = num1*num2- Math.floor((Math.random() * 10) + 1);
+            o2 = num1*num2 + Math.floor((Math.random() * 10) + 1);
+            o3 = answer;
+            o4 = num1*2;
+          }
+          else if (decide ==4){
+            o1 = num2*2;
+            o2 = num1*num2 - Math.floor((Math.random() * 10) + 1);
+            o3 = num1*num2 + Math.floor((Math.random() * 10) + 1);
+            o4 = answer;
+          }
+          }
+        document.getElementById("t1").innerHTML = o1;
+        document.getElementById("t2").innerHTML = o2;
+        document.getElementById("t3").innerHTML = o3;
+        document.getElementById("t4").innerHTML = o4;
+
+        }
+        function allowDrop(ev) {
+                ev.preventDefault();
+        }
+
+        function drag(ev) {
+                ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        function drop(ev,name) {
+                var num = document.getElementById(name).innerHTML;
+                if (num == answer)
+                {
+                  score++;
+                  document.getElementById("score").innerHTML = "Score = " + score;
+                  start(false);
+                }
+                else
+                {
+                clearInterval(timeinterval);
+                  gameover();
+                }
+
+        }
+        document.onkeydown = checkKey;
+
+        function checkKey(e) {
+
+          e = e || window.event;
+
+          if (e.keyCode == 27)
+          {
+            mainMenu();
+          }
+}
+        </script>
+    </body>
+</html>
