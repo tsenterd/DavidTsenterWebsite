@@ -1,0 +1,126 @@
+<html>
+<head>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div id = "title" style="position:absolute;left:37%;top:10%;">
+  <h1>Currency Converter</h1>
+  <h3 style="position:absolute;left:28%;">By David Tsenter </h3>
+</div>
+  <div id = "main" style="position:relative;top:30%;left:32%;display:inline-block;">
+<input  type="text" id="price">
+<select style="margin-right:40px;" id="choice" onchange="updateValue()">
+</select>
+<input style="margin-left:20px" type="text" id="converted" readonly>
+<select id="choice2" onchange="updateValue()">
+</select>
+</div>
+<h4 style="position:absolute;top:29.5%;left:28.5%;">From:</h4>
+<h4 style="position:absolute;top:29.5%;left:47%;">To:</h4>
+  <script type="text/javascript">
+var xmlhttp = new XMLHttpRequest();
+var url = "https://gist.githubusercontent.com/Fluidbyte/2973986/raw/b0d1722b04b0a737aade2ce6e055263625a0b435/Common-Currency.json";
+
+xmlhttp.onreadystatechange = function() {
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+        var myArr = JSON.parse(xmlhttp.responseText);
+        readInCurrencies(myArr);
+    }
+};
+xmlhttp.open("GET", url, true);
+xmlhttp.send();
+
+function readInCurrencies(arr) {
+    var i;
+    for(i = 0; i < 118; i++) {
+      var select = document.getElementById("choice");
+      var option = document.createElement("option");
+      option.text = (Object.keys(arr)[i]);
+      option.value = (Object.keys(arr)[i]);
+      option.setAttribute("id", Object.keys(arr)[i]);
+      select.appendChild(option);
+
+      var select = document.getElementById("choice2");
+      var option = document.createElement("option");
+      option.text = (Object.keys(arr)[i]);
+      option.value = (Object.keys(arr)[i]);
+      option.setAttribute("id", Object.keys(arr)[i]);
+      select.appendChild(option);
+    }
+
+}
+//function to check the number of decimal places of a number. Obtained from StackOverflow.
+function decimalPlaces(num) {
+  var match = (''+num).match(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/);
+  if (!match) { return 0; }
+  return Math.max(
+       0,
+       // Number of digits right of decimal point.
+       (match[1] ? match[1].length : 0)
+       // Adjust for scientific notation.
+       - (match[2] ? +match[2] : 0));
+}
+var price = $('#price'),
+    currencyId1 = $('#choice'),
+    currencyId2 = $('#choice2')
+    converted = $('#converted');
+  function updateValue (){
+   var first = currencyId1[0].options[currencyId1[0].selectedIndex].value;
+   var second = currencyId2[0].options[currencyId2[0].selectedIndex].value;
+   var input = price.val();
+   if (decimalPlaces(input) >2){
+     alert("Please enter a number with maximum 2 decimal places");
+     price.val("");
+     converted.val("");
+     return;
+   }
+
+   var currency;
+   if (first === second)
+     currency = 1;
+   else
+     currency = converter(String(first),String(second));
+   converted.val((input*currency).toFixed(2));
+  }
+price.keydown(function() {
+    setTimeout(function() {
+      var first = currencyId1[0].options[currencyId1[0].selectedIndex].value;
+      var second = currencyId2[0].options[currencyId2[0].selectedIndex].value;
+      var input = price.val();
+      if (decimalPlaces(input) >2){
+        alert("Please enter a number with maximum 2 decimal places");
+        price.val("");
+        converted.val("");
+        return;
+      }
+      var currency;
+      if (first === second)
+        currency = 1;
+      else
+        currency = converter(String(first),String(second));
+        var amount = input * currency;
+        converted.val(amount.toFixed(2));
+    }, 0);
+});
+
+function httpGet(theUrl)
+{
+    var xmlHttp = null;
+    xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false );
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+}
+function converter(from,to){
+var query = 'select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20("'+from+to+'")';
+var url= "https://query.yahooapis.com/v1/public/yql" + "?q=" + query + "&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
+var response = httpGet(url);
+var json = JSON.parse(response);
+//console.log(http_response);
+return json.query.results.rate.Rate;
+}
+  </script>
+</body>
+</html>
