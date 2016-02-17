@@ -5,21 +5,22 @@
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
-  <div id = "title" style="position:absolute;left:37%;top:10%;">
+  <div id = "title" style="position:absolute;left:36%;top:10%;">
   <h1>Currency Converter</h1>
-  <h3 style="position:absolute;left:28%;">By David Tsenter </h3>
+  <h3 style="position:absolute;left:25%;">By David Tsenter </h3>
 </div>
-  <div id = "main" style="position:relative;top:30%;left:32%;display:inline-block;">
+  <div id = "main" style="position:relative;top:30%;left:42%;display:inline-block;">
+    <h4>From: </h4>
 <input  type="text" id="price">
-<select style="margin-right:40px;" id="choice" onchange="updateValue()">
+<select id="choice" onchange="updateValue()">
 </select>
-<input style="margin-left:20px" type="text" id="converted" readonly>
+<h4>To: </h4>
+<input type="text" id="converted" readonly>
 <select id="choice2" onchange="updateValue()">
 </select>
 </div>
-<h4 style="position:absolute;top:29.5%;left:28.5%;">From:</h4>
-<h4 style="position:absolute;top:29.5%;left:47%;">To:</h4>
   <script type="text/javascript">
+  //Read in the abbreviations of modern currencies from an open-source Git project.
 var xmlhttp = new XMLHttpRequest();
 var url = "https://gist.githubusercontent.com/Fluidbyte/2973986/raw/b0d1722b04b0a737aade2ce6e055263625a0b435/Common-Currency.json";
 
@@ -31,7 +32,7 @@ xmlhttp.onreadystatechange = function() {
 };
 xmlhttp.open("GET", url, true);
 xmlhttp.send();
-
+//Function to store the abbreviations in the dropdown menus in the HTML.
 function readInCurrencies(arr) {
     var i;
     for(i = 0; i < 118; i++) {
@@ -62,10 +63,12 @@ function decimalPlaces(num) {
        // Adjust for scientific notation.
        - (match[2] ? +match[2] : 0));
 }
+//Use JQuery to retrieve values from HTML forms
 var price = $('#price'),
     currencyId1 = $('#choice'),
     currencyId2 = $('#choice2')
     converted = $('#converted');
+    //Function to update values in the output fields upon changing of currency.
   function updateValue (){
    var first = currencyId1[0].options[currencyId1[0].selectedIndex].value;
    var second = currencyId2[0].options[currencyId2[0].selectedIndex].value;
@@ -84,6 +87,7 @@ var price = $('#price'),
      currency = converter(String(first),String(second));
    converted.val((input*currency).toFixed(2));
   }
+  //Everytime a key is pressed, update the converted value (but make sure the number of decimals is at most 2)
 price.keydown(function() {
     setTimeout(function() {
       var first = currencyId1[0].options[currencyId1[0].selectedIndex].value;
@@ -104,7 +108,7 @@ price.keydown(function() {
         converted.val(amount.toFixed(2));
     }, 0);
 });
-
+// function to retrieve latest currency conversions using the Yahoo API.
 function httpGet(theUrl)
 {
     var xmlHttp = null;
@@ -113,12 +117,13 @@ function httpGet(theUrl)
     xmlHttp.send( null );
     return xmlHttp.responseText;
 }
+//uses the Yahoo Query Language
 function converter(from,to){
+//set up a proper query based on the selected currencies
 var query = 'select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20("'+from+to+'")';
 var url= "https://query.yahooapis.com/v1/public/yql" + "?q=" + query + "&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
 var response = httpGet(url);
 var json = JSON.parse(response);
-//console.log(http_response);
 return json.query.results.rate.Rate;
 }
   </script>
